@@ -1,7 +1,80 @@
-[gd_scene format=3 uid="uid://cs4l45iqix3jd"]
+[gd_scene load_steps=11 format=3 uid="uid://cs4l45iqix3jd"]
+
+[ext_resource type="Script" path="res://src/classes/celestialbody.gd" id="1_s38bt"]
+[ext_resource type="Texture2D" uid="uid://ea7ucsr8ayoa" path="res://assets/skybox.png" id="1_se78c"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8fq6c"]
+panorama = ExtResource("1_se78c")
+
+[sub_resource type="Sky" id="Sky_xe5m8"]
+sky_material = SubResource("PanoramaSkyMaterial_8fq6c")
+
+[sub_resource type="Environment" id="Environment_3wghl"]
+background_mode = 2
+sky = SubResource("Sky_xe5m8")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_73tji"]
+radius = 10.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_jrs4m"]
+radius = 10.0
+height = 20.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhndb"]
+albedo_color = Color(0.933333, 0.796078, 0.235294, 1)
+emission_enabled = true
+emission = Color(0.934479, 0.796366, 0.234573, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_nlfxy"]
+radius = 2.5
+height = 5.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rrkee"]
+radius = 2.5
 
 [node name="Test" type="Node3D"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3wghl")
+
+[node name="Cam" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Cam"]
+
+[node name="Sun" type="RigidBody3D" parent="."]
+mass = 1e+06
+script = ExtResource("1_s38bt")
+isSun = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sun"]
+shape = SubResource("SphereShape3D_73tji")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sun"]
+mesh = SubResource("SphereMesh_jrs4m")
+surface_material_override/0 = SubResource("StandardMaterial3D_lhndb")
+
+[node name="CelestialBody" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+mass = 5.0
+script = ExtResource("1_s38bt")
+initialVelocity = Vector3(100, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CelestialBody"]
+mesh = SubResource("SphereMesh_nlfxy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CelestialBody"]
+shape = SubResource("SphereShape3D_rrkee")
+
+[node name="CelestialBody2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -200)
+mass = 5.0
+script = ExtResource("1_s38bt")
+initialVelocity = Vector3(-50, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CelestialBody2"]
+mesh = SubResource("SphereMesh_nlfxy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CelestialBody2"]
+shape = SubResource("SphereShape3D_rrkee")

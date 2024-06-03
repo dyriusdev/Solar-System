@@ -15,7 +15,7 @@ func _ready() -> void:
     pass
 
 func _physics_process(_delta : float) -> void:
-    if not isSun:
+    if !isSun:
         Gravity()
     else:
         linear_velocity = Vector3.ZERO
@@ -28,6 +28,6 @@ func Gravity() -> void:
             var distance : float = direction.length()
 
             var forceMag : float = G * ((mass * otherBody.mass) / (distance * distance))
-            var force : Vector3 = direction.normalized() * forceMag
-            add_constant_central_force(-force)
+            var force : Vector3 = direction * forceMag
+            apply_central_force(-force)
     pass
