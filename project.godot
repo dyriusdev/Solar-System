@@ -13,3 +13,15 @@ config_version=5
 config/name="Solar System"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Events="*res://src/singletons/events.gd"
+Globals="*res://src/singletons/globals.gd"
+
+[physics]
+
+3d/default_gravity=0.0
+3d/default_gravity_vector=Vector3(0, 0, 0)
+3d/default_linear_damp=0.0
+3d/default_angular_damp=0.0
