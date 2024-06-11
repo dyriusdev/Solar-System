@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cs4l45iqix3jd"]
+[gd_scene load_steps=12 format=3 uid="uid://cs4l45iqix3jd"]
 
 [ext_resource type="Script" path="res://src/classes/celestialbody.gd" id="1_s38bt"]
 [ext_resource type="Texture2D" uid="uid://ea7ucsr8ayoa" path="res://assets/skybox.png" id="1_se78c"]
+[ext_resource type="Script" path="res://Cam.gd" id="2_b1ky5"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8fq6c"]
 panorama = ExtResource("1_se78c")
@@ -40,8 +41,9 @@ environment = SubResource("Environment_3wghl")
 [node name="Cam" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 current = true
+script = ExtResource("2_b1ky5")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Cam"]
+[node name="Light" type="DirectionalLight3D" parent="Cam"]
 
 [node name="Sun" type="RigidBody3D" parent="."]
 mass = 1e+06
